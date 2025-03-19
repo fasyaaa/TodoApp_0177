@@ -35,7 +35,9 @@ class _StatefullState extends State<Statefull> {
                     Expanded(child: TextFormField(
                       controller: _taskcontroller,
                       decoration: InputDecoration(
-                        labelText: "First Name"
+                        labelText: "First Name",
+                        hintText: "Enter Your First Name",
+                        border: OutlineInputBorder()
                       ),
                     ))
                   ],
