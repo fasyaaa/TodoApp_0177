@@ -23,10 +23,7 @@ class _StatefullState extends State<Statefull> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Form Input"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("Form Input"), centerTitle: true),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -36,21 +33,28 @@ class _StatefullState extends State<Statefull> {
                 key: _key,
                 child: Row(
                   children: [
-                    Expanded(child: TextFormField(
-                      controller: _taskcontroller,
-                      decoration: InputDecoration(
-                        labelText: "First Name",
-                        hintText: "Enter Your First Name",
-                        border: OutlineInputBorder()
+                    Expanded(
+                      child: TextFormField(
+                        controller: _taskcontroller,
+                        decoration: InputDecoration(
+                          labelText: "First Name",
+                          hintText: "Enter Your First Name",
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          return (value!.isEmpty)           //Ternary function
+                              ? 'Form tidak boleh kosong'
+                              : null;
+                        }, 
                       ),
-                    ))
+                    ),
                   ],
                 ),
-                )
+              ),
             ],
           ),
-          )
-          ),
+        ),
+      ),
     );
   }
 }
