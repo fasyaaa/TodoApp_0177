@@ -49,6 +49,7 @@ class _StatefullState extends State<Statefull> {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
                     ),
+                    SizedBox(width: 16),
                     FilledButton(
                       onPressed: () {
                         if (_key.currentState!.validate()) {
