@@ -11,7 +11,7 @@ class _StatefullState extends State<Statefull> {
   final _key = GlobalKey<FormState>();
   final TextEditingController _taskcontroller = TextEditingController();
 
-    List<String> listTask = [];
+  List<String> listTask = [];
 
   void addData() {
     setState(() {
@@ -22,6 +22,12 @@ class _StatefullState extends State<Statefull> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0)
+          )
+          ),
+    );
   }
 }
