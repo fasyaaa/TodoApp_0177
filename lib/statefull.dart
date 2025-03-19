@@ -56,7 +56,8 @@ class _StatefullState extends State<Statefull> {
                           addData();
                         }
                       },
-                      child: Text('Submit'),
+                      style: FilledButton.styleFrom(backgroundColor: Color(0xff7973d1)), //setting for hex color
+                      child: Text('Submit', style: TextStyle(color: Colors.white),),
                     ),
                   ],
                 ),
