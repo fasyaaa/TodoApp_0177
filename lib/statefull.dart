@@ -42,11 +42,19 @@ class _StatefullState extends State<Statefull> {
                           border: OutlineInputBorder(),
                         ),
                         validator: (value) {
-                          return (value!.isEmpty)           //Ternary function
+                          return (value!.isEmpty) //Ternary function
                               ? 'Form tidak boleh kosong'
                               : null;
-                        }, 
+                        },
                       ),
+                    ),
+                    FilledButton(
+                      onPressed: () {
+                        if (_key.currentState!.validate()) {
+                          addData();
+                        }
+                      },
+                      child: Text('Submit'),
                     ),
                   ],
                 ),
