@@ -25,7 +25,24 @@ class _StatefullState extends State<Statefull> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0)
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Form(
+                key: _key,
+                child: Row(
+                  children: [
+                    Expanded(child: TextFormField(
+                      controller: _taskcontroller,
+                      decoration: InputDecoration(
+                        labelText: "First Name"
+                      ),
+                    ))
+                  ],
+                ),
+                )
+            ],
+          ),
           )
           ),
     );
