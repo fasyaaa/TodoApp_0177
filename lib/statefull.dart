@@ -46,6 +46,7 @@ class _StatefullState extends State<Statefull> {
                               ? 'Form tidak boleh kosong'
                               : null;
                         },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
                     ),
                     FilledButton(
