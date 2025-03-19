@@ -11,6 +11,15 @@ class _StatefullState extends State<Statefull> {
   final _key = GlobalKey<FormState>();
   final TextEditingController _taskcontroller = TextEditingController();
 
+    List<String> listTask = [];
+
+  void addData() {
+    setState(() {
+      listTask.add(_taskcontroller.text);
+      _taskcontroller.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
