@@ -25,6 +25,7 @@ class _StatefullState extends State<Statefull> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Form Input"),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Padding(
