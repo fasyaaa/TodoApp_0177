@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:scroll_date_picker/scroll_date_picker.dart';
+import 'package:flutter/cupertino.dart';
 
 class Statefull extends StatefulWidget {
   const Statefull({super.key});
@@ -40,6 +40,7 @@ class _StatefullState extends State<Statefull> {
   }
 
   void _showDatePicker() {
+    DateTime now = DateTime.now();
     DateTime tempDate = _selectedDate ?? DateTime.now();
 
     showModalBottomSheet(
@@ -53,19 +54,58 @@ class _StatefullState extends State<Statefull> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Selected Task Date',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 16.0,
+                      top: 8.0,
+                    ), // Jarak kiri & atas
+                    child: Text(
+                      'Set Task Date & Time',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const Spacer(), // Mendorong icon ke kanan
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: 16.0,
+                      top: 8.0,
+                    ), // Jarak kanan & atas
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.clear),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
               SizedBox(
                 height: 200,
-                child: ScrollDatePicker(
-                  selectedDate: tempDate,
-                  locale: const Locale('en'),
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.dateAndTime,
+                  initialDateTime: tempDate,
+                  minimumDate: DateTime(2000),
+                  maximumDate: now,
+                  use24hFormat: false,
                   onDateTimeChanged: (DateTime value) {
                     setState(() {
-                      tempDate = value;
+                      int selectedYear = value.year;
+                      int maxMonth =
+                          (selectedYear == now.year) ? now.month : 12;
+
+                      tempDate = DateTime(
+                        selectedYear,
+                        (value.month > maxMonth) ? maxMonth : value.month,
+                        value.day,
+                        value.hour,
+                        value.minute,
+                      );
                     });
                   },
                 ),
@@ -133,7 +173,7 @@ class _StatefullState extends State<Statefull> {
                         _selectedDate == null
                             ? "Selected a date"
                             : DateFormat(
-                              'EEE, MMM d, yyyy',
+                              'EEE, MMM d yyyy | HH:MM a',
                             ).format(_selectedDate!),
                         style: TextStyle(fontSize: 15, color: Colors.grey[700]),
                       ),
