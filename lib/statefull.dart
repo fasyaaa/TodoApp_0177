@@ -167,6 +167,13 @@ class _StatefullState extends State<Statefull> {
                       onPressed: () {
                         if (_key.currentState!.validate()) {
                           addData();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Task Added Successfully"),
+                              duration: Duration(seconds: 2),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
                         }
                       },
                       style: FilledButton.styleFrom(
@@ -203,16 +210,23 @@ class _StatefullState extends State<Statefull> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Deadline : ${DateFormat('dd-MM-yyyy HH:mm').format(task.deadline)}", 
-                            style: const TextStyle(color: Colors.blueGrey),
+                            Text(
+                              "Deadline : ${DateFormat('dd-MM-yyyy HH:mm').format(task.deadline)}",
+                              style: const TextStyle(color: Colors.blueGrey),
                             ),
-                            Text(task.isDone ? "Done" : "Not Done", 
-                            style:  TextStyle(color: task.isDone ? Colors.green : Colors.red),)
+                            Text(
+                              task.isDone ? "Done" : "Not Done",
+                              style: TextStyle(
+                                color: task.isDone ? Colors.green : Colors.red,
+                              ),
+                            ),
                           ],
                         ),
-                        trailing: Checkbox(value: task.isDone,
-                        onChanged: (value) => toggleTaskStatus(index), 
-                        activeColor: Colors.green,),
+                        trailing: Checkbox(
+                          value: task.isDone,
+                          onChanged: (value) => toggleTaskStatus(index),
+                          activeColor: Colors.green,
+                        ),
                       ),
                     );
                   },
