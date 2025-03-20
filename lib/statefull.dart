@@ -15,6 +15,7 @@ class _StatefullState extends State<Statefull> {
   final TextEditingController _taskcontroller = TextEditingController();
 
   DateTime? _selectedDate;
+  bool _autoValidate = false;
 
   List<Task> listTask = [];
 
@@ -28,11 +29,32 @@ class _StatefullState extends State<Statefull> {
             isDone: false,
           ),
         );
-        _taskcontroller.clear();
-        _selectedDate = null;
-        _key.currentState!.reset();
+        
+         _resetForm();
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Task Added Successfully"),
+          duration: Duration(seconds: 2),
+          backgroundColor: Colors.green,
+        ),
+      );
     }
+  }
+
+  void _resetForm() {
+    setState(() {
+      _taskcontroller.clear();
+      _selectedDate = null;
+      _autoValidate = false;
+      _key.currentState!.reset();
+    });
+
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        _autoValidate = true;
+      });
+    });
   }
 
   void toggleTaskStatus(int index) {
@@ -90,8 +112,10 @@ class _StatefullState extends State<Statefull> {
                   });
                   Navigator.pop(context);
                 },
-                child: const Text('Submit',
-                  style: TextStyle(color: Colors.white)),
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
@@ -162,7 +186,9 @@ class _StatefullState extends State<Statefull> {
                               ? 'Form tidak boleh kosong'
                               : null;
                         },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        autovalidateMode: _autoValidate 
+                        ? AutovalidateMode.onUserInteraction 
+                        : AutovalidateMode.disabled,
                       ),
                     ),
                     SizedBox(width: 16),
@@ -177,7 +203,6 @@ class _StatefullState extends State<Statefull> {
                               backgroundColor: Colors.green,
                             ),
                           );
-                          setState(() {});
                         }
                       },
                       style: FilledButton.styleFrom(
