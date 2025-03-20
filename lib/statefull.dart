@@ -29,8 +29,8 @@ class _StatefullState extends State<Statefull> {
             isDone: false,
           ),
         );
-        
-         _resetForm();
+
+        _resetForm();
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -82,6 +82,37 @@ class _StatefullState extends State<Statefull> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 16.0,
+                      top: 8.0,
+                    ), // Jarak kiri & atas
+                    child: Text(
+                      'Set Task Date & Time',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const Spacer(), // Mendorong ikon ke kanan
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: 16.0,
+                      top: 8.0,
+                    ), // Jarak kanan & atas
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context); // Menutup modal
+                      },
+                      icon: const Icon(Icons.clear),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
               SizedBox(
                 height: 200,
                 child: CupertinoDatePicker(
@@ -186,9 +217,10 @@ class _StatefullState extends State<Statefull> {
                               ? 'Form tidak boleh kosong'
                               : null;
                         },
-                        autovalidateMode: _autoValidate 
-                        ? AutovalidateMode.onUserInteraction 
-                        : AutovalidateMode.disabled,
+                        autovalidateMode:
+                            _autoValidate
+                                ? AutovalidateMode.onUserInteraction
+                                : AutovalidateMode.disabled,
                       ),
                     ),
                     SizedBox(width: 16),
