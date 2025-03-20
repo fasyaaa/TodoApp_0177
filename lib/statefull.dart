@@ -33,7 +33,7 @@ class _StatefullState extends State<Statefull> {
     }
   }
 
-  void toggleTaskStatus(int index){
+  void toggleTaskStatus(int index) {
     setState(() {
       listTask[index].isDone = !listTask[index].isDone;
     });
@@ -181,9 +181,42 @@ class _StatefullState extends State<Statefull> {
                 ),
               ),
               SizedBox(height: 16),
+
+              // List Tasks
               Text(
                 'List Task',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: listTask.length,
+                  itemBuilder: (context, index) {
+                    Task task = listTask[index];
+                    return Card(
+                      color: Colors.grey[200],
+                      child: ListTile(
+                        title: Text(
+                          task.name,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Deadline : ${DateFormat('dd-MM-yyyy HH:mm').format(task.deadline)}", 
+                            style: const TextStyle(color: Colors.blueGrey),
+                            ),
+                            Text(task.isDone ? "Done" : "Not Done", 
+                            style:  TextStyle(color: task.isDone ? Colors.green : Colors.red),)
+                          ],
+                        ),
+                        trailing: Checkbox(value: task.isDone,
+                        onChanged: (value) => toggleTaskStatus(index), 
+                        activeColor: Colors.green,),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
