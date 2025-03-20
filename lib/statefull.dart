@@ -15,7 +15,7 @@ class _StatefullState extends State<Statefull> {
 
   DateTime? _selectedDate;
 
-  List<String> listTask = [];
+  List<Task> listTask = [];
 
   void addData() {
     setState(() {
