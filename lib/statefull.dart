@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:scroll_date_picker/scroll_date_picker.dart';
 
 class Statefull extends StatefulWidget {
   const Statefull({super.key});
@@ -41,7 +42,12 @@ class _StatefullState extends State<Statefull> {
 
   void _showDatePicker() {
     DateTime now = DateTime.now();
-    DateTime tempDate = _selectedDate ?? DateTime.now();
+    DateTime tempDate = _selectedDate ?? now;
+
+    if (tempDate.isAfter(now)) {
+      tempDate =
+          now; 
+    }
 
     showModalBottomSheet(
       context: context,
@@ -54,37 +60,6 @@ class _StatefullState extends State<Statefull> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      left: 16.0,
-                      top: 8.0,
-                    ), // Jarak kiri & atas
-                    child: Text(
-                      'Set Task Date & Time',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const Spacer(), // Mendorong icon ke kanan
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 16.0,
-                      top: 8.0,
-                    ), // Jarak kanan & atas
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.clear),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
               SizedBox(
                 height: 200,
                 child: CupertinoDatePicker(
@@ -95,40 +70,20 @@ class _StatefullState extends State<Statefull> {
                   use24hFormat: false,
                   onDateTimeChanged: (DateTime value) {
                     setState(() {
-                      int selectedYear = value.year;
-                      int maxMonth =
-                          (selectedYear == now.year) ? now.month : 12;
-
-                      tempDate = DateTime(
-                        selectedYear,
-                        (value.month > maxMonth) ? maxMonth : value.month,
-                        value.day,
-                        value.hour,
-                        value.minute,
-                      );
+                      _selectedDate = value.isAfter(now) ? now : value;
                     });
                   },
                 ),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 50,
-                    vertical: 15,
-                  ),
-                ),
                 onPressed: () {
                   setState(() {
                     _selectedDate = tempDate;
                   });
                   Navigator.pop(context);
                 },
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(color: Colors.white),
-                ),
+                child: const Text('Submit'),
               ),
             ],
           ),
