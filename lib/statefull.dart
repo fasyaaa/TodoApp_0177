@@ -30,6 +30,7 @@ class _StatefullState extends State<Statefull> {
         );
         _taskcontroller.clear();
         _selectedDate = null;
+        _key.currentState!.reset();
       });
     }
   }
@@ -45,8 +46,7 @@ class _StatefullState extends State<Statefull> {
     DateTime tempDate = _selectedDate ?? now;
 
     if (tempDate.isAfter(now)) {
-      tempDate =
-          now; 
+      tempDate = now;
     }
 
     showModalBottomSheet(
@@ -77,13 +77,21 @@ class _StatefullState extends State<Statefull> {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                    vertical: 15,
+                  ),
+                ),
                 onPressed: () {
                   setState(() {
                     _selectedDate = tempDate;
                   });
                   Navigator.pop(context);
                 },
-                child: const Text('Submit'),
+                child: const Text('Submit',
+                  style: TextStyle(color: Colors.white)),
               ),
             ],
           ),
@@ -169,6 +177,7 @@ class _StatefullState extends State<Statefull> {
                               backgroundColor: Colors.green,
                             ),
                           );
+                          setState(() {});
                         }
                       },
                       style: FilledButton.styleFrom(
