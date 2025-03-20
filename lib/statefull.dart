@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scroll_date_picker/scroll_date_picker.dart';
 
 class Statefull extends StatefulWidget {
   const Statefull({super.key});
@@ -11,6 +12,8 @@ class _StatefullState extends State<Statefull> {
   final _key = GlobalKey<FormState>();
   final TextEditingController _taskcontroller = TextEditingController();
 
+  DateTime? _selectedDate;
+
   List<String> listTask = [];
 
   void addData() {
@@ -18,6 +21,61 @@ class _StatefullState extends State<Statefull> {
       listTask.add(_taskcontroller.text);
       _taskcontroller.clear();
     });
+  }
+
+  void _showDatePicker() {
+    DateTime tempDate = _selectedDate ?? DateTime.now();
+
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Selected Task Date',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 200,
+                child: ScrollDatePicker(
+                  selectedDate: tempDate,
+                  locale: const Locale('en'),
+                  onDateTimeChanged: (DateTime value) {
+                    setState(() {
+                      tempDate = value;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                    vertical: 15,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    _selectedDate = tempDate;
+                  });
+                  Navigator.pop(context);
+                },
+                child: const Text('Submit', style: TextStyle(color: Colors.white),),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -35,9 +93,21 @@ class _StatefullState extends State<Statefull> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Task Date :', style: 
-                      TextStyle(fontSize: 15, fontWeight: FontWeight.w500,),
-                      )
+                      Row(
+                        children: [
+                          const Text(
+                            'Task Date :',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: _showDatePicker,
+                            icon: const Icon(Icons.date_range),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ],
@@ -69,8 +139,13 @@ class _StatefullState extends State<Statefull> {
                           addData();
                         }
                       },
-                      style: FilledButton.styleFrom(backgroundColor: Color(0xff7973d1)), //setting for hex color
-                      child: Text('Submit', style: TextStyle(color: Colors.white),),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Color(0xff7973d1),
+                      ), //setting for hex color
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
