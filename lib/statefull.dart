@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
 
 class Statefull extends StatefulWidget {
@@ -108,6 +109,11 @@ class _StatefullState extends State<Statefull> {
                           ),
                         ],
                       ),
+
+                      Text(_selectedDate == null ? "Selected a date" : DateFormat('EEE, MMM d, yyyy').format(_selectedDate!), 
+                      style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                      ),
+                      const SizedBox(height: 16),
                     ],
                   ),
                 ],
