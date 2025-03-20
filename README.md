@@ -19,7 +19,7 @@ Screenshot
 
 ![1](https://github.com/user-attachments/assets/8019848b-db96-4549-ae26-6b5b5cc3b6a6)
 
-![2](https://github.com/user-attachments/assets/e39674d2-59cd-478b-b364-8b137d52a8a2)
+![2](https://github.com/user-attachments/assets/427c95f2-9105-4e2c-b3b0-2d4c47155765)
 
 ![3](https://github.com/user-attachments/assets/a27595b2-25f5-4292-a7f9-055ed7825d0c)
 
