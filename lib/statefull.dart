@@ -18,9 +18,24 @@ class _StatefullState extends State<Statefull> {
   List<Task> listTask = [];
 
   void addData() {
+    if (_key.currentState!.validate() && _selectedDate != null) {
+      setState(() {
+        listTask.add(
+          Task(
+            name: _taskcontroller.text,
+            deadline: _selectedDate!,
+            isDone: false,
+          ),
+        );
+        _taskcontroller.clear();
+        _selectedDate = null;
+      });
+    }
+  }
+
+  void toggleTaskStatus(int index){
     setState(() {
-      listTask.add(_taskcontroller.text);
-      _taskcontroller.clear();
+      listTask[index].isDone = !listTask[index].isDone;
     });
   }
 
@@ -70,7 +85,10 @@ class _StatefullState extends State<Statefull> {
                   });
                   Navigator.pop(context);
                 },
-                child: const Text('Submit', style: TextStyle(color: Colors.white),),
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
@@ -111,8 +129,13 @@ class _StatefullState extends State<Statefull> {
                         ],
                       ),
 
-                      Text(_selectedDate == null ? "Selected a date" : DateFormat('EEE, MMM d, yyyy').format(_selectedDate!), 
-                      style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                      Text(
+                        _selectedDate == null
+                            ? "Selected a date"
+                            : DateFormat(
+                              'EEE, MMM d, yyyy',
+                            ).format(_selectedDate!),
+                        style: TextStyle(fontSize: 15, color: Colors.grey[700]),
                       ),
                       const SizedBox(height: 16),
                     ],
@@ -157,10 +180,23 @@ class _StatefullState extends State<Statefull> {
                   ],
                 ),
               ),
+              SizedBox(height: 16),
+              Text(
+                'List Task',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+class Task {
+  String name;
+  DateTime deadline;
+  bool isDone;
+
+  Task({required this.name, required this.deadline, required this.isDone});
 }
